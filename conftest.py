@@ -34,7 +34,7 @@ def page(context: BrowserContext):
     page.close()
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def base_url():
     """Base URL for the PNNCLE website."""
     return "https://pnncle.com"
