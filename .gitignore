@@ -42,6 +42,11 @@ test-results/
 playwright-report/
 playwright/.cache/
 
+# TypeScript/Node
+node_modules/
+dist/
+*.tsbuildinfo
+
 # Environment variables
 .env
 .env.local

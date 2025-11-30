@@ -2,171 +2,119 @@
 
 Automated testing suite for [pnncle.com](https://pnncle.com/) to ensure web forms are working correctly and content quality is maintained.
 
-## Features
+## Overview
 
-### 1. Form Testing
-- Tests all web forms on the website
-- Verifies form submissions
-- Checks for success/error messages
-- Tests newsletter signup forms
-- Tests contact forms
-- Validates form accessibility
+This project uses **TypeScript** and **Playwright** to automate:
+1. **Form Testing**: Ensures all web forms submit correctly and messages are delivered
+2. **Content Quality**: Scans the entire site for spelling and grammatical errors
 
-### 2. Content Scanning
-- Scans blog posts and articles for typos
-- Checks grammar and spelling errors
-- Reports content quality issues
-- Monitors new content automatically
+## Tech Stack
+
+- **TypeScript** - Type-safe test code
+- **Playwright** - Browser automation
+- **Node.js** - Runtime environment
+- **GitHub Actions** - CI/CD automation
+- **Next.js Dashboard** - Test results visualization
+
+## Project Structure
+
+```
+.
+├── tests-ts/              # TypeScript test files
+│   ├── test-forms.spec.ts      # Form submission tests
+│   ├── test-content.spec.ts    # Content quality tests
+│   └── helpers/               # Helper utilities
+├── dashboard-app/         # Next.js dashboard for viewing results
+├── playwright.config.ts   # Playwright configuration
+└── .github/workflows/     # GitHub Actions workflows
+```
 
 ## Setup
 
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package manager)
-
-### Installation
-
-1. **Clone the repository** (if not already done):
+1. **Install Dependencies**
    ```bash
-   git clone https://github.com/eliaguilar/PNNCLE-Automation-Testing.git
-   cd PNNCLE-Automation-Testing
+   npm install
    ```
 
-2. **Create a virtual environment** (recommended):
+2. **Install Playwright Browsers**
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Install Playwright browsers**:
-   ```bash
-   playwright install chromium
+   npx playwright install chromium
    ```
 
 ## Running Tests
 
-### Run all tests:
+### Run All Tests
 ```bash
-pytest
+npm test
 ```
 
-### Run specific test suites:
+### Run Form Tests Only
 ```bash
-# Run only form tests
-pytest -m form_test
-
-# Run only content scanning tests
-pytest -m content_test
+npm run test:forms
 ```
 
-### Run with HTML report:
+### Run Content Tests Only
 ```bash
-pytest --html=test-results/report.html --self-contained-html
+npm run test:content
 ```
 
-The HTML report will be generated in the `test-results/` directory.
-
-### Run with verbose output:
+### Run with UI
 ```bash
-pytest -v
+npm run test:ui
 ```
 
-## Test Structure
-
-```
-PNNCLE-Automation-Testing/
-├── tests/
-│   ├── __init__.py
-│   ├── test_forms.py          # Form submission tests
-│   └── test_content_scanning.py # Content quality tests
-├── conftest.py                 # Pytest configuration and fixtures
-├── pytest.ini                  # Pytest settings
-├── requirements.txt            # Python dependencies
-├── .gitignore                  # Git ignore rules
-└── README.md                   # This file
-```
-
-## Configuration
-
-### Base URL
-The base URL is configured in `conftest.py`. To test a different environment, modify the `base_url` fixture.
-
-### Test Markers
-Tests are marked with:
-- `@pytest.mark.form_test` - Form-related tests
-- `@pytest.mark.content_test` - Content scanning tests
-
-## CI/CD Integration
-
-This test suite can be integrated into CI/CD pipelines:
-
-### GitHub Actions Example
-```yaml
-name: PNNCLE Tests
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-      - run: pip install -r requirements.txt
-      - run: playwright install chromium
-      - run: pytest
-```
-
-## Hosting Considerations
-
-### Option 1: GitHub Actions (Recommended)
-- Free for public repositories
-- Runs tests on every push/PR
-- Generates test reports automatically
-- No additional hosting needed
-
-### Option 2: Self-Hosted Runner
-- Set up on your own server
-- More control over environment
-- Requires server maintenance
-
-### Option 3: Cloud CI/CD Services
-- CircleCI, Travis CI, or similar
-- May have free tiers
-- Easy integration with GitHub
-
-## Notes
-
-- **Form Testing**: Tests use test email addresses. Make sure your forms accept these or configure test mode.
-- **Content Scanning**: Grammar checking uses LanguageTool which may have some false positives. Review reports carefully.
-- **Rate Limiting**: Tests include delays to avoid overwhelming the server. Adjust if needed.
-
-## Troubleshooting
-
-### Playwright browser not found
+### Generate HTML Report
 ```bash
-playwright install chromium
+npm run test:report
 ```
 
-### Language tool errors
-The grammar checker may fail on first run. It will download language data automatically. If issues persist, the tests will skip grammar checking.
+## Test Data
 
-### Timeout errors
-If tests timeout, increase timeout values in test files or check network connectivity.
+Default test data used for form submissions:
+- **Name**: PNNCLE Automation
+- **Email**: pnncle.automation@pnncle.com
+- **Phone**: 805-123-4567
+- **Other Fields**: PNNCLE Automation Test Scripts
 
-## Contributing
+## Forms Tested
 
-1. Create a feature branch
-2. Make your changes
-3. Run tests to ensure everything works
-4. Submit a pull request
+- `/equip/` - Equipment request form
+- `/gift/` - Gift form
+- `/partners/` - Partnership form
+- `/contact/` - Contact form
+- Homepage newsletter forms
+
+## Content Scanning
+
+The content scanning tests:
+- Fetch all pages from the sitemap (`https://pnncle.com/sitemap_index.xml`)
+- Check spelling using native spellchecker
+- Check grammar using LanguageTool API
+- Report issues with page URL, paragraph number, context, and suggestions
+
+## Dashboard
+
+The Next.js dashboard (`dashboard-app/`) provides:
+- View test results from GitHub Actions
+- Form test status cards
+- Content quality check results
+- Manual test triggering
+- Historical test run data
+
+See `dashboard-app/README.md` for dashboard setup instructions.
+
+## CI/CD
+
+Tests run automatically on:
+- Push to `main` branch
+- Pull requests
+- Daily at 2 AM UTC
+- Manual trigger via GitHub Actions UI or dashboard
+
+## Legacy Python Tests
+
+The `tests/` directory contains legacy Python tests (pytest-based). These are being phased out in favor of the TypeScript implementation.
 
 ## License
 
-This project is for PNNCLE Global Ministries testing purposes.
-
+ISC
