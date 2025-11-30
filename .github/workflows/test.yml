@@ -16,7 +16,7 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -38,7 +38,7 @@ jobs:
       run: pytest -m content_test --html=test-results/content-report.html --self-contained-html
     
     - name: Upload test reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-reports
@@ -48,7 +48,7 @@ jobs:
       run: pytest --html=test-results/full-report.html --self-contained-html
     
     - name: Upload full test report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: full-test-report
