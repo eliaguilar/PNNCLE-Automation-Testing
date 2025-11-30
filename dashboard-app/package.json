@@ -1,0 +1,33 @@
+{
+  "name": "pnncle-test-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard for viewing PNNCLE automation test reports",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.0.2",
+    "@types/cheerio": "^0.22.35",
+    "@types/jszip": "^3.4.0",
+    "cheerio": "^1.1.2",
+    "jszip": "^3.10.1",
+    "next": "^14.2.33",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
+    "autoprefixer": "^10.4.22",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.2.33",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.3.3"
+  }
+}
