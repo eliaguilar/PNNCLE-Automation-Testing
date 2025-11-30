@@ -18,33 +18,32 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
       with:
-        python-version: '3.9'
+        node-version: '20'
+        cache: 'npm'
     
     - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      run: npm ci
     
     - name: Install Playwright browsers
-      run: playwright install chromium
+      run: npx playwright install --with-deps chromium
     
     - name: Create test-results directory
       run: mkdir -p test-results
     
     - name: Run form tests
       continue-on-error: true
-      run: pytest -m form_test --html=test-results/form-report.html --self-contained-html || true
+      run: npm run test:forms -- --reporter=html --output-dir=test-results/form-report || true
     
     - name: Run content scanning tests
       continue-on-error: true
-      run: pytest -m content_test --html=test-results/content-report.html --self-contained-html || true
+      run: npm run test:content -- --reporter=html --output-dir=test-results/content-report || true
     
     - name: Run all tests
       continue-on-error: true
-      run: pytest --html=test-results/full-report.html --self-contained-html || true
+      run: npm run test:report -- --output-dir=test-results || true
     
     - name: Upload test reports
       uses: actions/upload-artifact@v4
@@ -61,6 +60,5 @@ jobs:
       continue-on-error: true
       with:
         name: full-test-report
-        path: test-results/full-report.html
+        path: test-results/html-report/
         if-no-files-found: ignore
-
